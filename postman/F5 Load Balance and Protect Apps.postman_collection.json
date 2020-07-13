@@ -1,0 +1,489 @@
+{
+	"info": {
+		"_postman_id": "6ea48926-3b2c-4aa6-a452-ffb3b3fb62e4",
+		"name": "F5 Load Balance and Protect Apps",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Lab Environment Setup",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2b60113a-b867-4c90-822f-7522e431d014",
+								"exec": [
+									"pm.test(\"Set token variable\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    pm.environment.set(\"ACCESS_TOKEN\", jsonData.access_token);",
+									"})",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"username\": \"{{USER_EMAIL}}\", \"password\": \"{{USER_PASSWORD}}\" }"
+						},
+						"url": {
+							"raw": "https://{{HOSTNAME}}/{{API_VERSION}}/svc-auth/login",
+							"protocol": "https",
+							"host": [
+								"{{HOSTNAME}}"
+							],
+							"path": [
+								"{{API_VERSION}}",
+								"svc-auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Current User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "92dcaf2d-4cc1-47fb-bc16-fa46b05b35ba",
+								"exec": [
+									"pm.test(\"Set account_id and user_id variables\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    if (!pm.environment.get(\"ACCOUNT_ID\")) {",
+									"        pm.environment.set(\"ACCOUNT_ID\", jsonData.primary_account_id);",
+									"    }",
+									"    pm.environment.set(\"USER_ID\", jsonData.id);",
+									"})",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{HOSTNAME}}/{{API_VERSION}}/svc-account/user",
+							"protocol": "https",
+							"host": [
+								"{{HOSTNAME}}"
+							],
+							"path": [
+								"{{API_VERSION}}",
+								"svc-account",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Catalogs",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "05c744a5-4cc6-424d-9b3d-400da632a6ff",
+								"exec": [
+									"pm.test(\"Set Catalog variables\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    for(var i=0; i<jsonData.Catalogs.length; i++) {",
+									"        if (jsonData.Catalogs[i].service_type === \"waf\") {",
+									"            pm.environment.set(\"WAF_CATALOG_ID\", jsonData.Catalogs[i].catalog_id);",
+									"        }",
+									"        ",
+									"        if (jsonData.Catalogs[i].service_type === \"adns\") {",
+									"            pm.environment.set(\"DNS_CATALOG_ID\", jsonData.Catalogs[i].catalog_id);",
+									"        }",
+									"        ",
+									"        if (jsonData.Catalogs[i].service_type === \"gslb\") {",
+									"            pm.environment.set(\"GSLB_CATALOG_ID\", jsonData.Catalogs[i].catalog_id);",
+									"        }",
+									"    }",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{HOSTNAME}}/{{API_VERSION}}/svc-catalog/catalogs",
+							"protocol": "https",
+							"host": [
+								"{{HOSTNAME}}"
+							],
+							"path": [
+								"{{API_VERSION}}",
+								"svc-catalog",
+								"catalogs"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Protect EAP multiple endpoints",
+			"item": [
+				{
+					"name": "Get FQDN Record type (lab)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "947a563b-2c40-458d-b598-87dcc1527cb7",
+								"exec": [
+									"pm.test(\"Get User's EAP Record\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    pm.environment.set(\"EAP_RECORD\", jsonData.record);",
+									"})",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"url": {
+							"raw": "http://{{DNS_WEB_ADMIN}}/record/eap",
+							"protocol": "http",
+							"host": [
+								"{{DNS_WEB_ADMIN}}"
+							],
+							"path": [
+								"record",
+								"eap"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get EAP Subscription",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b5fadd96-29ab-4e52-be87-6ae31e0956ea",
+								"exec": [
+									"pm.test(\"Find previously created subscription\", function() {",
+									"    const jsonData = pm.response.json();",
+									"    for(var i=0; i < jsonData.subscriptions.length; i++) {",
+									"        const subscription = jsonData.subscriptions[i];",
+									"        const eapRecord = pm.environment.get(\"EAP_RECORD\");",
+									"        if (subscription.service_instance_name === eapRecord) {",
+									"            pm.environment.set(\"WAF_SERVICE_INSTANCE_ID\", subscription.service_instance_id);",
+									"            pm.environment.set(\"WAF_SUBSCRIPTION_ID\", subscription.subscription_id);",
+									"            pm.environment.set(\"WAF_CNAME\", subscription.configuration.details.CNAMEValue);",
+									"        }",
+									"    }",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{HOSTNAME}}/{{API_VERSION}}/svc-subscription/subscriptions?account_id={{ACCOUNT_ID}}&service_type=waf",
+							"protocol": "https",
+							"host": [
+								"{{HOSTNAME}}"
+							],
+							"path": [
+								"{{API_VERSION}}",
+								"svc-subscription",
+								"subscriptions"
+							],
+							"query": [
+								{
+									"key": "account_id",
+									"value": "{{ACCOUNT_ID}}"
+								},
+								{
+									"key": "service_type",
+									"value": "waf"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update CNAME Record (lab)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"cname\": \"{{WAF_CNAME}}\"\n}"
+						},
+						"url": {
+							"raw": "http://{{DNS_WEB_ADMIN}}/record/eap",
+							"protocol": "http",
+							"host": [
+								"{{DNS_WEB_ADMIN}}"
+							],
+							"path": [
+								"record",
+								"eap"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Start EAP Attack (lab)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"domain\": \"{{EAP_RECORD}}\"\n}"
+						},
+						"url": {
+							"raw": "http://{{DNS_WEB_ADMIN}}/attack",
+							"protocol": "http",
+							"host": [
+								"{{DNS_WEB_ADMIN}}"
+							],
+							"path": [
+								"attack"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Protect one whole LB record",
+			"item": [
+				{
+					"name": "Get DNS Zone (lab)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3c919214-1cab-45e6-bf28-649078c7df07",
+								"exec": [
+									"pm.test(\"Get User's DNS Zone Name\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    pm.environment.set(\"ZONE_NAME\", jsonData.zone);",
+									"})",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"url": {
+							"raw": "http://{{DNS_WEB_ADMIN}}/zone",
+							"protocol": "http",
+							"host": [
+								"{{DNS_WEB_ADMIN}}"
+							],
+							"path": [
+								"zone"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Cleanup",
+			"item": [
+				{
+					"name": "Reset EAP Record (lab)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"url": {
+							"raw": "http://{{DNS_WEB_ADMIN}}/record/eap/reset",
+							"protocol": "http",
+							"host": [
+								"{{DNS_WEB_ADMIN}}"
+							],
+							"path": [
+								"record",
+								"eap",
+								"reset"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retire DNS Zone (lab)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"url": {
+							"raw": "http://{{DNS_WEB_ADMIN}}/zone/retire",
+							"protocol": "http",
+							"host": [
+								"{{DNS_WEB_ADMIN}}"
+							],
+							"path": [
+								"zone",
+								"retire"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"access_token\": \"{{ACCESS_TOKEN}}\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{HOSTNAME}}/{{API_VERSION}}/svc-auth/logout",
+							"protocol": "https",
+							"host": [
+								"{{HOSTNAME}}"
+							],
+							"path": [
+								"{{API_VERSION}}",
+								"svc-auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

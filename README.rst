@@ -187,7 +187,9 @@ Now that you have a customer FQDN record value, you use it as your own "test app
 
 At this point, some users may want to select a different value in the drop-down for the EAP Region, which you can update/change at any time in the EAP instance settings after the instance setup.
 
-**NOTE**: If after a minute you don't see the endpoint info, hit refresh and click "Complete Setup" to return to this step / see the info.
+**IMPORTANT NOTE**: Please manually change the region to the closest to your location or ask assistant about it. If after a minute you don't see the endpoint info, hit refresh and click "Complete Setup" to return to this step / see the info.
+
+.. figure:: _figures/1_4_0.png
 
 Click **Save & Continue**.
 

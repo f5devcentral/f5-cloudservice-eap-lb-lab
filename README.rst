@@ -164,11 +164,13 @@ The response will return your record name, its status, current type and value.
 
 Note that at this stage our test application is using an A-record to route traffic that's going to the FQDN to the IP of the app server. During the lab we will update this DNS record to a CNAME generated during the Essential App Protect instance setup, so that the app traffic will be directed to Essential App Protect instance first, and then the "scrubbed" traffic will be directed to our app IP (or FQDN) depending on the configuration.
 
+**IMPORTANT NOTE**: It may take up to 2-3 minutes to generate the custom DNS record personalized for you & your lab. This is a good time to take a quick break, grab some coffee, stretch, and return in a few minutes before continuing. 
+
 When this request completes successfully the value of the FQDN Record will be captured as a variable:
 
 .. figure:: _figures/0_26.png
 
-**IMPORTANT NOTE**: Make note of this FQDN record; we will use it many times throughout the lab, and for creating the Essential App Protect service in the F5 Cloud Services portal, as well as throughout the lab as the domain name for your test application.
+**NOTE**: Make note of this FQDN record; we will use it many times throughout the lab, and for creating the Essential App Protect service in the F5 Cloud Services portal, as well as throughout the lab as the domain name for your test application.
 
 2. Create Essential App Protect Instance
 ************************************************************************
@@ -183,19 +185,21 @@ Now that you have a customer FQDN record value, you use it as your own "test app
 
 .. figure:: _figures/1_3_1.png
 
-`c)` Essential App Protect does an FQDN lookup to retrieve the corresponding IP of the FQDN record, and will gather info on the location and geo-proximity of the nearest cloud region, and will display these as recommendations for where to deploy the EAP instance.
+`c)` Essential App Protect does an FQDN lookup to retrieve the corresponding IP of the FQDN record, and will gather info on the location and geo-proximity of the nearest cloud region, and will display these as recommendations for where to deploy the EAP instance. 
 
-At this point, some users may want to select a different value in the drop-down for the EAP Region, which you can update/change at any time in the EAP instance settings after the instance setup.
-
-**IMPORTANT NOTE**: Please manually change the region to the closest to your location or ask assistant about it. If after a minute you don't see the endpoint info, hit refresh and click "Complete Setup" to return to this step / see the info.
+**IMPORTANT NOTE**: For the purposes of the lab, please change the Region to the one closest to you! Click **Change** (step 1 in the screenshot below), then select from the dropdown (step 2) the **Region** that is closest to your geographic location. 
 
 .. figure:: _figures/1_4_0.png
 
+Typically in a production environment you would select the recommended region (the one closest to the app). However, because in the lab we're using an existing deployed app, we would like to avoid putting multiple EAP instances all in one region. So, for the purposes of the lab, please manually change the region to the closest to your location. 
+
+**Note:** If after a minute you don't see the endpoint info, refresh your browser and click "Complete Setup" to return to this step / see the info.
+
 Click **Save & Continue**.
 
-.. figure:: _figures/1_4.png
-
 Note the info on the IP, City, State, and the Cloud Provider used by our test application. It also shows the region used by the cloud provider derived from the FQDN/IP information. As you can see in the screenshot, the example test app endpoint is located in North America, US East (N. Virginia) and is deployed on Amazon AWS. Note that the default configuration will be to route the traffic that's hitting the EAP instance to the identified IP address of the application endpoint.
+
+.. figure:: _figures/1_4.png
 
 `d)` You can now provide an SSL/TLS certificate if you want to. However, for the lab at this point we will skip uploading the certificate and for now will only select "Enable HTTP Listener" with Port 80, and uncheck "Enable HTTPS Listener", then click **Save & Continue**.
 
@@ -258,6 +262,8 @@ The response will return all information on your instance which we have created 
 .. figure:: _figures/1_14_2.png
 
 The response will show the updated type ("CNAME") and value.
+
+**IMPORTANT NOTE**: It may take up to 2-3 minutes to update your custom DNS record / CNAME Value. This is a good time to take another quick break, grab some more coffee, have a quick snack, and return in a few minutes before continuing. 
 
 `c)` Test CNAME change via the F5 Cloud Services portal 
 

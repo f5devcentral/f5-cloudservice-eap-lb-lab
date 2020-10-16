@@ -483,7 +483,7 @@ For this section we will use the F5 DNS Load Balancer for the Essential App Prot
 
 .. figure:: _figures/3_41.png
 
-`c)` Select **AWS: US East (Ohio) us-east-2** as a new region and **DNS Name** as the endpoint type. Then **Enable HTTP** with port **80** and click **Save**. 
+`c)` Select **AWS: US East (Ohio) us-east-2** as a new region and **DNS Name** as the endpoint type. Then fill in **Domain name** which consists of the record name **'auction'** you indicated in step 5.b) above plus the name of your **DNS LB record** created in step 5.c) above. The end result is endpoint FQDN in the format 'auction.user-XXXXX.securelab.online. And after that **Enable HTTP** with port **80** and click **Save**.
 
 .. figure:: _figures/3_42.png
 

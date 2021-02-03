@@ -62,15 +62,12 @@ In order to access specific F5 Cloud Services, you need to subscribe to the corr
 
 `a)` Download Postman `here <http://bit.ly/309wSLl>`_, open it, create a Postman account if you don’t have one and choose to do so, and sign in.
 
-`b)` Import collection and environment JSON files from the `Git repo for this lab <https://bit.ly/3eb8yhN>`_ :
+`b)` Use the button below to import collection and environment to the Postman or manually import it from the `Git repo for this lab <https://bit.ly/3eb8yhN>`_
 
-First, select the Collection JSON file. (NOTE: import of one file at a time seems to avoid some reported issues with Postman). Collection: https://bit.ly/2ZavYj2
+.. image:: https://run.pstmn.io/button.svg
+   :target: https://app.getpostman.com/run-collection/166f08a5d54c0ce68167#?env%5BF5%20Load%20Balance%20and%20Protect%20Apps%5D=W3sia2V5IjoiSE9TVE5BTUUiLCJ2YWx1ZSI6ImFwaS5jbG91ZHNlcnZpY2VzLmY1LmNvbSIsImVuYWJsZWQiOnRydWV9LHsia2V5IjoiQVBJX1ZFUlNJT04iLCJ2YWx1ZSI6InYxIiwiZW5hYmxlZCI6dHJ1ZX0seyJrZXkiOiJETlNfV0VCX0FETUlOIiwidmFsdWUiOiI1NC4yMTEuMTIuMTczIiwiZW5hYmxlZCI6dHJ1ZX0seyJrZXkiOiJVU0VSX0VNQUlMIiwidmFsdWUiOiIiLCJlbmFibGVkIjp0cnVlfSx7ImtleSI6IlVTRVJfUEFTU1dPUkQiLCJ2YWx1ZSI6IiIsImVuYWJsZWQiOnRydWV9XQ==
 
-.. figure:: _figures/0_23.png
-
-.. figure:: _figures/0_24.png
-
-Repeat the steps above for the environment JSON file. Environment: https://bit.ly/3ffTcd2
+.. figure:: _figures/0_23_1.png
 
 You will now see the imported collection (left side) with calls in several categories, as well as environment variables (top right) used to store and pass data between Postman and the API.
 

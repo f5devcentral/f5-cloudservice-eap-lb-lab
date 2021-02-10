@@ -62,10 +62,12 @@ In order to access specific F5 Cloud Services, you need to subscribe to the corr
 
 `a)` Download Postman `here <http://bit.ly/309wSLl>`_, open it, create a Postman account if you don’t have one and choose to do so, and sign in.
 
-`b)` Use the button below to import collection and environment to the Postman or manually import it from the `Git repo for this lab <https://bit.ly/3eb8yhN>`_
+`b)` Use the "Run in Postman" button below to import collection and environment to the Postman or manually import it from the `Git repo for this lab <https://bit.ly/3eb8yhN>`_
 
 .. image:: https://run.pstmn.io/button.svg
-   :target: https://app.getpostman.com/run-collection/166f08a5d54c0ce68167#?env%5BF5%20Load%20Balance%20and%20Protect%20Apps%5D=W3sia2V5IjoiSE9TVE5BTUUiLCJ2YWx1ZSI6ImFwaS5jbG91ZHNlcnZpY2VzLmY1LmNvbSIsImVuYWJsZWQiOnRydWV9LHsia2V5IjoiQVBJX1ZFUlNJT04iLCJ2YWx1ZSI6InYxIiwiZW5hYmxlZCI6dHJ1ZX0seyJrZXkiOiJETlNfV0VCX0FETUlOIiwidmFsdWUiOiI1NC4yMTEuMTIuMTczIiwiZW5hYmxlZCI6dHJ1ZX0seyJrZXkiOiJVU0VSX0VNQUlMIiwidmFsdWUiOiIiLCJlbmFibGVkIjp0cnVlfSx7ImtleSI6IlVTRVJfUEFTU1dPUkQiLCJ2YWx1ZSI6IiIsImVuYWJsZWQiOnRydWV9XQ==
+   :target: https://app.getpostman.com/run-collection/901abdbf03e1b1a0dff5#?env%5BF5%20Load%20Balance%20and%20Protect%20Apps%5D=W3sia2V5IjoiSE9TVE5BTUUiLCJ2YWx1ZSI6ImFwaS5jbG91ZHNlcnZpY2VzLmY1LmNvbSIsImVuYWJsZWQiOnRydWV9LHsia2V5IjoiQVBJX1ZFUlNJT04iLCJ2YWx1ZSI6InYxIiwiZW5hYmxlZCI6dHJ1ZX0seyJrZXkiOiJETlNfV0VCX0FETUlOIiwidmFsdWUiOiI1NC4yMTEuMTIuMTczIiwiZW5hYmxlZCI6dHJ1ZX0seyJrZXkiOiJVU0VSX0VNQUlMIiwidmFsdWUiOiIiLCJlbmFibGVkIjp0cnVlfSx7ImtleSI6IlVTRVJfUEFTU1dPUkQiLCJ2YWx1ZSI6IiIsImVuYWJsZWQiOnRydWV9XQ==
+
+`c)` Choose "Postman for Windows" and open collection in Postman
 
 .. figure:: _figures/0_23_1.png
 

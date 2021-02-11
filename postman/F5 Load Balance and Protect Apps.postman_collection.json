@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "3c8676c0-1daa-43ef-8f4f-393523aa8b24",
+		"_postman_id": "52f07716-485d-4c6e-9511-d93175fd33fe",
 		"name": "F5 Load Balance and Protect Apps",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -14,7 +14,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "41d88607-b881-4654-8449-ee74b7ab19fb",
 								"exec": [
 									"pm.test(\"Set token variable\", function() {",
 									"    var jsonData = pm.response.json();",
@@ -64,7 +63,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1e538db4-9be7-428d-b5c8-5f7e8b863817",
 								"exec": [
 									"pm.test(\"Set account_id and user_id variables\", function () {",
 									"    var jsonData = pm.response.json();",
@@ -109,7 +107,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "cf9f8662-922e-4254-9d4f-b4c7d30f924e",
 								"exec": [
 									"pm.test(\"Set Catalog variables\", function() {",
 									"    var jsonData = pm.response.json();",
@@ -156,8 +153,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Protect EAP multiple endpoints",
@@ -168,7 +164,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b1e0b938-984a-4403-bfb3-075ac0579210",
 								"exec": [
 									"pm.test(\"Get User's EAP Record\", function() {",
 									"    var jsonData = pm.response.json();",
@@ -220,7 +215,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "7d6e063e-cb85-4db2-8cec-77371ae6ad00",
 								"exec": [
 									"pm.test(\"Find previously created subscription\", function() {",
 									"    const jsonData = pm.response.json();",
@@ -358,8 +352,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Protect one whole LB record",
@@ -370,7 +363,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a4cadf0a-18d9-42f6-b977-078fe343b2ce",
 								"exec": [
 									"pm.test(\"Get User's DNS Zone Name\", function() {",
 									"    var jsonData = pm.response.json();",
@@ -415,8 +407,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Cleanup",
@@ -511,9 +502,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }
